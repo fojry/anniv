@@ -1828,3 +1828,858 @@ html, body {
   text-align: center;
   box-shadow: 4px 4px 0px #000000;
 }
+
+/* Base Utility Classes for Wall of Love */
+.wall-top-nav {
+  background-color: var(--bg-white);
+  border-bottom: 1px solid #eee;
+}
+
+.wall-header-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.wall-header-desc {
+  color: #666;
+  font-size: 15px;
+  max-width: 640px;
+  line-height: 1.6;
+}
+
+.wall-create-btn {
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN SYSTEM — TABLET (max-width: 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .top-nav {
+    padding: 18px 24px;
+    gap: 14px;
+  }
+
+  .pill-btn {
+    padding: 8px 18px;
+    font-size: 13.5px;
+  }
+
+  .hero-center {
+    padding: 24px 20px 40px;
+  }
+
+  .sticker-top-rainbow {
+    width: clamp(200px, 30vw, 380px);
+  }
+
+  .sticker-bottom-rainbow {
+    width: clamp(200px, 30vw, 380px);
+    bottom: 30px;
+  }
+
+  .memory-stage-wrapper {
+    max-width: 920px;
+    padding: 0 16px;
+    margin: 12px auto 36px;
+  }
+
+  .memory-modal-frame {
+    padding: 24px 20px;
+    box-shadow: 6px 6px 0px var(--color-black);
+  }
+
+  .memory-content-grid {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 28px;
+  }
+
+  .memory-photo-img {
+    height: clamp(280px, 40vw, 420px);
+  }
+
+  .wall-section {
+    padding: 48px 20px;
+  }
+
+  .wall-letters-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+
+  .site-footer-bar {
+    padding: 14px 24px;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN SYSTEM — TABLETS & LARGE PHONES (max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .sky-stage {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .letter-form-stage {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 16px 16px 28px;
+  }
+
+  /* Top Nav */
+  .top-nav {
+    padding: 14px 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .top-logo-link {
+    font-size: 16px;
+  }
+
+  .top-nav-buttons {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .pill-btn {
+    padding: 7px 14px;
+    font-size: 12.5px;
+    min-height: 36px;
+  }
+
+  /* Stickers Scale & Positioning */
+  .sticker-top-rainbow {
+    width: clamp(160px, 35vw, 240px);
+    opacity: 0.85;
+  }
+
+  .sticker-bottom-rainbow {
+    width: clamp(160px, 35vw, 240px);
+    bottom: 24px;
+    opacity: 0.85;
+  }
+
+  .sticker-flower-left {
+    width: clamp(40px, 8vw, 60px);
+    top: auto;
+    bottom: 120px;
+    left: 2%;
+    opacity: 0.7;
+  }
+
+  .sticker-flower-right {
+    width: clamp(45px, 8.5vw, 65px);
+    top: 70px;
+    right: 2%;
+    opacity: 0.7;
+  }
+
+  .sticker-star-1,
+  .sticker-star-2,
+  .sticker-star-3,
+  .sticker-star-4,
+  .sticker-star-top {
+    width: 20px;
+    opacity: 0.7;
+  }
+
+  /* Hero Center */
+  .hero-center {
+    padding: 16px 16px 32px;
+  }
+
+  .hero-sparkle-container {
+    inset: -14px -10px;
+  }
+
+  .hero-sparkle-item {
+    font-size: 20px;
+  }
+
+  .hero-sparkle-item:nth-child(5) {
+    left: -12px !important;
+  }
+
+  .hero-sparkle-item:nth-child(6) {
+    right: -12px !important;
+  }
+
+  .hero-anniv-tag {
+    font-size: clamp(20px, 5.2vw, 36px);
+    -webkit-text-stroke: 1.5px #000;
+    text-shadow: 2.5px 2.5px 0px #000, 4px 4px 0px #000;
+  }
+
+  .hero-names-row {
+    gap: 6px 14px;
+  }
+
+  .word-year, .word-love, .word-name {
+    font-size: clamp(42px, 11vw, 76px);
+    -webkit-text-stroke: 2px #000;
+    text-shadow: 3px 3px 0px #000, 5px 5px 0px #000;
+  }
+
+  .word-and {
+    font-size: clamp(28px, 7.5vw, 48px);
+    -webkit-text-stroke: 1.6px #000;
+    text-shadow: 2.5px 2.5px 0px #000, 4px 4px 0px #000;
+    margin: 0 4px;
+  }
+
+  .hero-subhead {
+    font-size: 14.5px;
+    line-height: 1.55;
+    margin-bottom: 24px;
+    padding: 0 8px;
+  }
+
+  .hero-cta-container {
+    gap: 10px;
+  }
+
+  .cta-match-btn {
+    padding: 11px 22px;
+    font-size: 14.5px;
+  }
+
+  /* Kenangan Foto */
+  .memory-stage-wrapper {
+    padding: 0 12px;
+    margin: 8px auto 28px;
+  }
+
+  .memory-modal-frame {
+    padding: 20px 16px;
+    border-radius: 12px;
+    box-shadow: 5px 5px 0px var(--color-black);
+  }
+
+  .memory-slide-viewport {
+    min-height: auto;
+  }
+
+  .memory-content-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .memory-photo-frame {
+    box-shadow: 4px 4px 0px var(--color-black);
+  }
+
+  .memory-photo-img {
+    height: clamp(240px, 54vw, 360px);
+  }
+
+  .memory-header-row {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    gap: 8px;
+  }
+
+  .memory-story-title {
+    font-size: 22px;
+  }
+
+  .memory-story-text {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .memory-whisper-card {
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+
+  .memory-controls-bar {
+    margin-top: 20px;
+    padding-top: 16px;
+    gap: 12px;
+  }
+
+  /* Kirim Pesan Form */
+  .letter-form-center {
+    max-width: 100%;
+    padding: 0 8px;
+  }
+
+  .letter-heading {
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+
+  .openai-tagline {
+    font-size: 13px;
+    margin-bottom: 24px;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sender-toggle-btn {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .btn-generate-gold {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  /* Wall of Love */
+  .wall-section {
+    padding: 32px 16px 48px;
+  }
+
+  .wall-header-title {
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+
+  .wall-header-desc {
+    font-size: 14px;
+  }
+
+  .wall-letters-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    margin-top: 24px;
+  }
+
+  .wall-filter-bar {
+    margin-top: 16px;
+    margin-bottom: 20px;
+  }
+
+  /* Footer */
+  .site-footer-bar {
+    padding: 14px 18px;
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .footer-left,
+  .footer-right {
+    justify-content: center;
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN SYSTEM — MOBILE PHONES (max-width: 640px)
+   ========================================================================== */
+@media (max-width: 640px) {
+  /* Navigation */
+  .top-nav {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .top-logo-link {
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .top-nav-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .pill-btn {
+    padding: 6px 11px;
+    font-size: 11.5px;
+    min-height: 34px;
+    gap: 4px;
+  }
+
+  /* Hero Center */
+  .hero-center {
+    padding: 10px 10px 24px;
+  }
+
+  .hero-title-wrapper {
+    max-width: 100%;
+  }
+
+  .hero-sparkle-container {
+    inset: -10px -4px;
+  }
+
+  .hero-sparkle-item {
+    font-size: 16px;
+  }
+
+  .hero-sparkle-item:nth-child(5) {
+    left: -4px !important;
+  }
+
+  .hero-sparkle-item:nth-child(6) {
+    right: -4px !important;
+  }
+
+  .hero-anniv-tag {
+    font-size: clamp(16px, 4.8vw, 22px);
+    -webkit-text-stroke: 1.2px #000;
+    text-shadow: 2px 2px 0px #000, 3px 3px 0px #000;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+
+  .hero-names-row {
+    gap: 2px 8px;
+    margin: 2px 0 6px;
+  }
+
+  .word-year, .word-love, .word-name {
+    font-size: clamp(34px, 10.5vw, 46px);
+    -webkit-text-stroke: 1.5px #000;
+    text-shadow: 2.5px 2.5px 0px #000, 4px 4px 0px #000;
+  }
+
+  .word-and {
+    font-size: clamp(20px, 6.5vw, 28px);
+    -webkit-text-stroke: 1.2px #000;
+    text-shadow: 2px 2px 0px #000, 3px 3px 0px #000;
+    margin: 0 2px;
+  }
+
+  .hero-subhead {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+    padding: 0 4px;
+    max-width: 100%;
+  }
+
+  .hero-cta-container {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    gap: 8px;
+  }
+
+  .cta-match-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    gap: 8px;
+  }
+
+  .btn-heart-badge {
+    width: 24px;
+    height: 24px;
+  }
+
+  .btn-heart-badge img {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Decorative Stickers */
+  .sticker-top-rainbow {
+    width: clamp(120px, 32vw, 180px);
+    opacity: 0.75;
+  }
+
+  .sticker-bottom-rainbow {
+    width: clamp(120px, 32vw, 180px);
+    bottom: 16px;
+    opacity: 0.75;
+  }
+
+  .sticker-flower-left {
+    width: clamp(32px, 8vw, 45px);
+    bottom: 80px;
+    opacity: 0.55;
+  }
+
+  .sticker-flower-right {
+    width: clamp(34px, 8vw, 48px);
+    top: 60px;
+    opacity: 0.55;
+  }
+
+  .sticker-star-1,
+  .sticker-star-2,
+  .sticker-star-3,
+  .sticker-star-4,
+  .sticker-star-top {
+    width: 16px;
+    opacity: 0.6;
+  }
+
+  /* Kenangan Foto */
+  .memory-stage-wrapper {
+    padding: 0 8px;
+    margin: 6px auto 20px;
+    width: 100%;
+  }
+
+  .memory-modal-frame {
+    padding: 14px 12px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 0px var(--color-black);
+    border-width: 1.5px;
+  }
+
+  .memory-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .memory-counter-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+
+  .memory-photo-frame {
+    box-shadow: 3px 3px 0px var(--color-black);
+    border-radius: 6px;
+    border-width: 1.5px;
+  }
+
+  .memory-photo-img {
+    height: clamp(210px, 58vw, 290px);
+  }
+
+  .memory-photo-tag {
+    bottom: auto;
+    top: 8px;
+    left: 8px;
+    font-size: 10px;
+    padding: 3px 8px;
+    max-width: calc(100% - 90px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .media-counter-pill {
+    top: 8px;
+    right: 8px;
+    font-size: 9.5px;
+    padding: 3px 8px;
+  }
+
+  .media-nav-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+
+  .media-nav-prev { left: 6px; }
+  .media-nav-next { right: 6px; }
+
+  .media-subthumbs-strip {
+    bottom: 8px;
+    right: 8px;
+    left: auto;
+    max-width: calc(100% - 16px);
+    padding: 4px 6px;
+    gap: 5px;
+    border-radius: 8px;
+  }
+
+  .media-subthumb-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .memory-story-title {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .memory-story-text {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .memory-whisper-card {
+    font-size: 12px;
+    padding: 8px 10px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Memory Controls Grid: Thumbs on top, Prev & Next side-by-side underneath */
+  .memory-controls-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "thumbs thumbs"
+      "prev next";
+    gap: 10px 8px;
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+
+  .memory-thumbnails-strip {
+    grid-area: thumbs;
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px 0 4px;
+    gap: 6px;
+    scrollbar-width: none;
+  }
+
+  .memory-thumbnails-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .memory-thumb-btn {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+  }
+
+  .memory-btn-prev {
+    grid-area: prev;
+    width: 100%;
+    justify-content: center;
+    padding: 9px 10px;
+    font-size: 12.5px;
+    box-shadow: 2px 2px 0px var(--color-black);
+  }
+
+  .memory-btn-next {
+    grid-area: next;
+    width: 100%;
+    justify-content: center;
+    padding: 9px 10px;
+    font-size: 12.5px;
+    box-shadow: 2px 2px 0px var(--color-black);
+  }
+
+  /* Slideshow on Slide 6 */
+  .memory-photo-frame.memory-photo-frame-centered .memory-photo-img {
+    height: clamp(220px, 62vw, 320px);
+  }
+
+  .slideshow-actions-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .slideshow-play-toggle {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+
+  .slideshow-nav-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .slideshow-status-bar {
+    font-size: 10.5px;
+    padding: 6px 10px;
+    line-height: 1.35;
+    border-radius: 10px;
+    max-width: 100%;
+  }
+
+  /* Kirim Pesan Form */
+  .letter-form-stage {
+    padding: 10px 10px 24px;
+  }
+
+  .letter-heading {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+
+  .openai-tagline {
+    font-size: 11.5px;
+    margin-bottom: 16px;
+    padding: 0 4px;
+  }
+
+  .sender-label {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .sender-pill-toggle {
+    gap: 6px;
+  }
+
+  .sender-toggle-btn {
+    padding: 9px 8px;
+    font-size: 12.5px;
+    gap: 5px;
+  }
+
+  .sender-avatar {
+    font-size: 16px;
+  }
+
+  .recipient-info-pill {
+    font-size: 11.5px;
+    padding: 4px 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .letter-textarea {
+    font-size: 13.5px;
+    padding: 10px 12px;
+    min-height: 110px;
+    border-radius: 10px;
+  }
+
+  .category-chips {
+    gap: 5px;
+  }
+
+  .category-chip {
+    padding: 4px 9px;
+    font-size: 11px;
+  }
+
+  .btn-generate-gold {
+    padding: 11px 16px;
+    font-size: 13px;
+    width: 100%;
+  }
+
+  /* Wall of Love */
+  .wall-section {
+    padding: 20px 12px 36px;
+  }
+
+  .wall-header-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .wall-header-title {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+
+  .wall-header-desc {
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .wall-create-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .wall-filter-bar {
+    gap: 6px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    margin-top: 14px;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .wall-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wall-filter-btn {
+    flex-shrink: 0;
+    padding: 5px 12px;
+    font-size: 11.5px;
+  }
+
+  .wall-letters-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .wall-letter-card {
+    padding: 14px 12px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 0 var(--color-black);
+  }
+
+  .wall-empty-state {
+    padding: 28px 14px;
+    border-radius: 12px;
+    margin-top: 16px;
+  }
+
+  .wall-empty-state h3 {
+    font-size: 18px;
+  }
+
+  .wall-empty-state p {
+    font-size: 12.5px;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN SYSTEM — ULTRA COMPACT SCREENS (max-width: 380px)
+   ========================================================================== */
+@media (max-width: 380px) {
+  .top-logo-link span:last-child {
+    font-size: 15px;
+  }
+
+  .pill-btn {
+    padding: 5px 9px;
+    font-size: 10.5px;
+    min-height: 32px;
+  }
+
+  .word-year, .word-love, .word-name {
+    font-size: clamp(30px, 9.5vw, 38px);
+  }
+
+  .word-and {
+    font-size: clamp(18px, 6vw, 24px);
+  }
+
+  .hero-anniv-tag {
+    font-size: clamp(14px, 4.5vw, 18px);
+  }
+
+  .sender-toggle-btn {
+    padding: 8px 6px;
+    font-size: 11.5px;
+  }
+
+  .memory-thumb-btn {
+    width: 38px;
+    height: 38px;
+  }
+}
+

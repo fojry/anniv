@@ -868,7 +868,7 @@ export default function ReverseEngineeredApp() {
               <div className="memory-controls-bar">
                 <button
                   type="button"
-                  className="memory-btn-nav"
+                  className="memory-btn-nav memory-btn-prev"
                   disabled={currentMemoryIndex === 0}
                   onClick={() => handleSelectMemory(Math.max(0, currentMemoryIndex - 1))}
                 >
@@ -898,7 +898,7 @@ export default function ReverseEngineeredApp() {
 
                 <button
                   type="button"
-                  className="memory-btn-nav btn-primary"
+                  className="memory-btn-nav btn-primary memory-btn-next"
                   disabled={currentMemoryIndex === photoMemories.length - 1}
                   onClick={() => handleSelectMemory(Math.min(photoMemories.length - 1, currentMemoryIndex + 1))}
                 >
@@ -1062,7 +1062,7 @@ export default function ReverseEngineeredApp() {
           ========================================================================= */}
       {view === 'wall' && (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          <header className="top-nav" style={{ backgroundColor: 'var(--bg-white)', borderBottom: '1px solid #eee' }}>
+          <header className="top-nav wall-top-nav">
             <div
               className="top-logo-link"
               onClick={handleGoHome}
@@ -1089,16 +1089,16 @@ export default function ReverseEngineeredApp() {
 
           <main className="wall-section" style={{ flex: 1 }}>
             <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
+              <div className="wall-header-group">
                 <div>
                   <h1 className="wall-header-title">The Wall of Love</h1>
-                  <p style={{ color: '#666', fontSize: '15px', maxWidth: '640px', lineHeight: 1.6 }}>
+                  <p className="wall-header-desc">
                     Papan pesan cinta khusus berdua antara <strong>Radia (Fajry)</strong> dan <strong>Rala</strong>. Setiap kata, janji manis, dan ungkapan rasa tersimpan abadi di sini. 💌✨
                   </p>
                 </div>
                 <button
                   type="button"
-                  className="btn-generate-gold"
+                  className="btn-generate-gold wall-create-btn"
                   onClick={() => setView('letter')}
                 >
                   <span>+ Kirim Pesan Baru</span>

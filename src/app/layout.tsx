@@ -1,5 +1,12 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#ffe3f4',
+};
 
 export const metadata: Metadata = {
   title: 'HAPPY ANNIVERSARY Rala and Radia',
