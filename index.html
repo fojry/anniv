@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAPPY ANNIVERSARY Rala and Radia</title>
+  <meta name="description" content="Rayakan anniversary penuh cinta! Buka galeri kenangan foto dan saling bertukar surat cinta manis di The Wall of Love bersama Rala and Radia.">
+  <meta name="keywords" content="HAPPY ANNIVERSARY Rala and Radia, Anniversary, Kenangan Foto, Wall of Love">
+  <meta property="og:title" content="HAPPY ANNIVERSARY Rala and Radia">
+  <meta property="og:description" content="Great things happen when you discover the match that's made for you.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <header class="site-nav" id="mainHeader">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#hero" class="brand-logo" id="navBrandLogo" aria-label="HAPPY ANNIVERSARY Rala and Radia Home">
+          <svg class="brand-heart" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span>HAPPY ANNIVERSARY Rala and Radia</span>
+        </a>
+
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li><a href="#quiz" class="nav-link" id="linkNavQuiz">Kenangan Foto</a></li>
+            <li><a href="#wall" class="nav-link" id="linkNavWall">Wall of Love</a></li>
+            <li><a href="#milestones" class="nav-link" id="linkNavMilestones">Milestones</a></li>
+            <li><a href="#faq" class="nav-link" id="linkNavFaq">FAQ</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-actions">
+          <button type="button" class="btn btn-secondary btn-pill" id="openNoteModalBtnNav">
+            + Leave Note
+          </button>
+          <a href="#quiz" class="btn btn-primary btn-pill" id="navQuizCta">
+            Lihat Kenangan
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-header">
+          <div class="hero-pill-badge">
+            <span class="badge badge-warning">✨ Anniversary Edition · HAPPY ANNIVERSARY Rala and Radia</span>
+          </div>
+
+          <div class="hero-title-grid" aria-label="HAPPY ANNIVERSARY Rala and Radia Big Typography">
+            <div class="hero-title-line">
+              <h1>HAPPY</h1>
+              <h1 class="stroke-text">HAPPY</h1>
+            </div>
+            <div class="hero-title-line">
+              <h1>ANNIVERSARY</h1>
+              <h1 class="stroke-text">ANNIVERSARY</h1>
+            </div>
+            <div class="hero-title-line" style="display:flex; justify-content:center; margin-top:4px;">
+              <span style="font-family: var(--font-serif); font-size: clamp(28px, 5.5vw, 68px); font-weight: 900; color: #ffc7e9; -webkit-text-stroke: 2px #000; paint-order: stroke fill; text-shadow: 3px 3px 0 #000;">
+                Rala <span style="font-size: 0.85em; color: #ffc7e9; -webkit-text-stroke: 2px #000; paint-order: stroke fill;">AND</span> Radia
+              </span>
+            </div>
+          </div>
+
+          <p class="hero-lead">
+            Rayakan momen anniversary penuh cinta, tawa, dan kenangan manis. Buka album foto perjalanan dan cerita cinta terindah Rala &amp; Radia.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#quiz" class="btn btn-primary btn-lg" id="heroStartQuizBtn">
+              Lihat Kenangan Foto ↓
+            </a>
+            <a href="#wall" class="btn btn-ghost btn-lg" id="heroWallBtn">
+              Explore Wall of Love
+            </a>
+            <button type="button" class="btn btn-secondary btn-lg" id="heroLovePledgeBtn">
+              💖 Share A Whisper
+            </button>
+          </div>
+        </div>
+
+        <!-- Featured Media Showcase Frame -->
+        <div class="hero-media-wrapper">
+          <img src="assets/hero_couple.jpg" alt="A loving couple celebrating their anniversary at golden hour sunset" class="hero-image" id="heroMainImage">
+          <div class="hero-media-overlay">
+            <div>
+              <div class="hero-meta-title">Lee &amp; Eden · The Journey of Two Souls</div>
+              <div class="hero-meta-subtitle">Curated with devotion on a 4px grid · Light rose surface (#ffe3f4)</div>
+            </div>
+            <div class="badge badge-info">
+              <span>● 100% Harmonic Match</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Stats Counter Strip -->
+        <div class="stats-strip" id="statsStrip" aria-label="Celebration Statistics">
+          <div class="stat-item">
+            <div class="stat-value" id="statDaysCounter">365+</div>
+            <div class="stat-label">Days of Devotion</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="statSmilesCounter">1,420</div>
+            <div class="stat-label">Shared Laughs</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="statMatchScore">99.8%</div>
+            <div class="stat-label">Chemistry Score</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="statNotesCounter">248</div>
+            <div class="stat-label">Love Letters Written</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Matchmaker Quiz Section -->
+    <section class="section" id="quiz">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge section-tag">Anniversary Special · Quiz Cinta</span>
+          <h2 class="section-title">All About Anniversary Rala &amp; Radia</h2>
+          <p class="section-description">
+            Jawab 5 pertanyaan manis seputar perjalanan cinta untuk mengetahui profil harmoni dan sinergi kasih Rala &amp; Radia!
+          </p>
+        </div>
+
+        <div class="quiz-container" id="quizAppContainer">
+          <!-- Quiz Active View -->
+          <div id="quizActiveView">
+            <div class="quiz-top-bar">
+              <span class="quiz-progress-text" id="quizStepText">Question 1 of 5</span>
+              <div class="quiz-progress-track">
+                <div class="quiz-progress-bar" id="quizProgressBar" style="width: 20%;"></div>
+              </div>
+            </div>
+
+            <h3 class="quiz-question-title" id="quizQuestionTitle">You’re planning your dream vacation:</h3>
+
+            <div class="quiz-options-grid" id="quizOptionsContainer">
+              <!-- Dynamically populated options -->
+            </div>
+
+            <div class="quiz-controls">
+              <button type="button" class="btn btn-ghost" id="quizPrevBtn" disabled>
+                ← Back
+              </button>
+              <div class="text-muted" style="font-size: 13px;" id="quizHintText">
+                Click a card to choose your answer
+              </div>
+              <button type="button" class="btn btn-primary" id="quizNextBtn" disabled>
+                Next Question →
+              </button>
+            </div>
+          </div>
+
+          <!-- Quiz Result View -->
+          <div class="quiz-result-view" id="quizResultView">
+            <span class="badge badge-warning result-badge">🎉 Perfect Resonance Found</span>
+            <h2 class="result-headline" id="resultArchetypeTitle">The Soul Adventurer &amp; Cozy Dreamer</h2>
+            
+            <div class="result-compatibility-score" id="resultScorePill">
+              <span>💖 Match Compatibility:</span>
+              <span id="resultScoreValue">98.4%</span>
+            </div>
+
+            <p class="result-description" id="resultDescriptionText">
+              You balance bold curiosity with the warmth of a peaceful hearth. One provides the spark of exploration, while the other builds the foundation of gentle comfort. Together, you form an unstoppable, loving duality.
+            </p>
+
+            <div class="result-traits-grid" id="resultTraitsGrid">
+              <div class="trait-card">
+                <div class="trait-label">Primary Energy</div>
+                <div class="trait-value" id="traitEnergy">Warm &amp; Exploratory</div>
+              </div>
+              <div class="trait-card">
+                <div class="trait-label">Conflict Solver</div>
+                <div class="trait-value" id="traitConflict">Humor &amp; Teamwork</div>
+              </div>
+              <div class="trait-card">
+                <div class="trait-label">Love Language</div>
+                <div class="trait-value" id="traitLanguage">Quality Time &amp; Words</div>
+              </div>
+            </div>
+
+            <div class="result-actions">
+              <button type="button" class="btn btn-secondary btn-lg" id="quizRetakeBtn">
+                ↻ Retake Quiz
+              </button>
+              <button type="button" class="btn btn-primary btn-lg" id="quizPinResultBtn">
+                💌 Pin Result to Wall of Love
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wall of Love Section -->
+    <section class="section" id="wall">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge section-tag">Community Wall</span>
+          <h2 class="section-title">The Wall of Love</h2>
+          <p class="section-description">
+            Whispers, anniversary promises, and sweet memories. Read letters from users and leave your own indelible note.
+          </p>
+        </div>
+
+        <div class="wall-actions-bar">
+          <div class="filter-pills" id="wallFilterContainer">
+            <button type="button" class="filter-pill active" data-filter="all">All Notes</button>
+            <button type="button" class="filter-pill" data-filter="Anniversary">Anniversary</button>
+            <button type="button" class="filter-pill" data-filter="Sweet">Sweet</button>
+            <button type="button" class="filter-pill" data-filter="Adventures">Adventures</button>
+            <button type="button" class="filter-pill" data-filter="Humor">Humor</button>
+          </div>
+
+          <button type="button" class="btn btn-primary btn-pill" id="openNoteModalBtnWall">
+            + Write a Love Note
+          </button>
+        </div>
+
+        <!-- Notes Grid -->
+        <div class="wall-grid" id="loveNotesGrid">
+          <!-- Dynamic cards rendered by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Milestones Timeline Section -->
+    <section class="section" id="milestones">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge section-tag">Our Journey</span>
+          <h2 class="section-title">Chapters of Connection</h2>
+          <p class="section-description">
+            From the very first shy glance to endless shared dreams, every milestone has shaped these 2 wonderful years of love for Rala and Radia.
+          </p>
+        </div>
+
+        <div class="timeline-grid">
+          <div class="timeline-card">
+            <div class="timeline-step">Chapter 01 · Inception</div>
+            <h3 class="timeline-title">The First Spark</h3>
+            <p class="timeline-text">A spontaneous late-night coffee conversation that felt like time ceased to tick. What was meant to be one hour lasted until dawn.</p>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-step">Chapter 02 · Discovery</div>
+            <h3 class="timeline-title">Unplanned Escapes</h3>
+            <p class="timeline-text">Getting lost on country backroads, singing out of tune with the windows down, discovering that home is a person, not a place.</p>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-step">Chapter 03 · Roots</div>
+            <h3 class="timeline-title">Weathering Together</h3>
+            <p class="timeline-text">Finding laughter during 404 errors in life. Turning burnt dinners and messy work weeks into shared giggles on the kitchen floor.</p>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-step">Chapter 04 · Forever</div>
+            <h3 class="timeline-title">Today &amp; The Future</h3>
+            <p class="timeline-text">Celebrating 365 days of mutual admiration, shared goals, and stepping together into an endless horizon of new adventures.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion Section -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge section-tag">Curious Minds</span>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-description">
+            Everything you need to know about the HAPPY ANNIVERSARY Rala and Radia celebration and design philosophy.
+          </p>
+        </div>
+
+        <div class="faq-list" id="faqContainer">
+          <div class="faq-item open">
+            <button type="button" class="faq-trigger" aria-expanded="true">
+              <span>What is the philosophy behind HAPPY ANNIVERSARY Rala and Radia?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <p>HAPPY ANNIVERSARY Rala and Radia is a celebration in joyful design, celebrating meaningful interpersonal connection and personal synergy through thoughtful typography, subtle pastel surfaces (#ffe3f4), and interactive storytelling.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false">
+              <span>How does the Matchmaker calculate compatibility?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <p>Our algorithm correlates cognitive pacing, vacation styles, work-life energy, and emotional reactions to life's little unexpected moments to produce a uniquely resonant profile.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false">
+              <span>Can I add custom love notes to the Wall?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <p>Yes! Simply click "+ Write a Love Note". Your message is instantly pinned to the board with interactive like counters saved locally.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false">
+              <span>Why is the design strictly following a 4px baseline?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <p>Every margin, padding, border radius, and gap is calibrated in multiples of 4px to deliver visual rhythm, crisp layout harmony, and unmatched typographic elegance.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal: Write a Love Note -->
+  <div class="modal-backdrop" id="loveNoteModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalNoteTitle">
+    <div class="modal" id="loveNoteModal">
+      <div class="modal-header">
+        <h3 id="modalNoteTitle" style="font-size: 20px;">💌 Write a Love Note</h3>
+        <button type="button" class="modal-close-btn" id="closeNoteModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="loveNoteForm">
+        <div class="form-group">
+          <label for="noteAuthor" class="form-label">Your Name or Nickname</label>
+          <input type="text" id="noteAuthor" class="form-input" placeholder="e.g. Secret Admirer, Sam" required maxlength="40">
+        </div>
+
+        <div class="form-group">
+          <label for="noteCategory" class="form-label">Category Tag</label>
+          <select id="noteCategory" class="form-select">
+            <option value="Anniversary">Anniversary</option>
+            <option value="Sweet">Sweet</option>
+            <option value="Adventures">Adventures</option>
+            <option value="Humor">Humor</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="noteMessage" class="form-label">Your Message</label>
+          <textarea id="noteMessage" class="form-textarea" placeholder="Write something from the heart..." required maxlength="280"></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: var(--space-8);">
+          <button type="button" class="btn btn-ghost" id="cancelNoteModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submitNoteBtn">Pin to Wall</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notice" id="toastNotice" role="status" aria-live="polite">
+    Note pinned with love! 💖
+  </div>
+
+  <!-- Minimalist Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-quote">
+          HAPPY ANNIVERSARY Rala and Radia — WISHING YOU ALL A LIFETIME FULL OF LOVE
+        </div>
+        <div class="footer-credits">
+          Reverse-engineered design system by <a href="https://year-of-love.exploresyndrome.com/" target="_blank" rel="noopener">WA Studio Syndromes</a> · Crafted with care by Antigravity
+        </div>
+        <div style="font-size: 12px; color: var(--text-muted);">
+          &copy; <span id="currentYear"></span> HAPPY ANNIVERSARY Rala and Radia. Built on a 4px baseline grid without blur filters.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
