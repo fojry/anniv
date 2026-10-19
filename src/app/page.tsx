@@ -462,33 +462,7 @@ export default function ReverseEngineeredApp() {
             <img src="/assets/flower_smiley.svg" alt="" className="sticker-inner-img sticker-flower-right-anim" />
           </div>
 
-          <div
-            className="sticker-pop-wrapper sticker-smiley-1"
-            style={{ '--sticker-pop-delay': '0.8s' } as React.CSSProperties}
-          >
-            <img src="/assets/smiley.svg" alt="" className="sticker-inner-img sticker-smiley-1-anim" />
-          </div>
 
-          <div
-            className="sticker-pop-wrapper sticker-smiley-2"
-            style={{ '--sticker-pop-delay': '1.05s' } as React.CSSProperties}
-          >
-            <img src="/assets/smiley.svg" alt="" className="sticker-inner-img sticker-smiley-2-anim" />
-          </div>
-
-          <div
-            className="sticker-pop-wrapper sticker-smiley-3"
-            style={{ '--sticker-pop-delay': '1.2s' } as React.CSSProperties}
-          >
-            <img src="/assets/smiley.svg" alt="" className="sticker-inner-img sticker-smiley-3-anim" />
-          </div>
-
-          <div
-            className="sticker-pop-wrapper sticker-smiley-4"
-            style={{ '--sticker-pop-delay': '1.35s' } as React.CSSProperties}
-          >
-            <img src="/assets/smiley.svg" alt="" className="sticker-inner-img sticker-smiley-4-anim" />
-          </div>
 
           <div
             className="sticker-pop-wrapper sticker-star-1"
@@ -614,7 +588,6 @@ export default function ReverseEngineeredApp() {
           </header>
 
           <img src="/assets/flower_smiley.svg" alt="" className="sticker sticker-flower-left" />
-          <img src="/assets/smiley.svg" alt="" className="sticker sticker-smiley-1" />
           <img src="/assets/star.svg" alt="" className="sticker sticker-star-2" />
           <img src="/assets/star.svg" alt="" className="sticker sticker-star-3" />
 
@@ -851,8 +824,6 @@ export default function ReverseEngineeredApp() {
 
           <img src="/assets/flower_smiley.svg" alt="" className="sticker sticker-flower-left" />
           <img src="/assets/flower_smiley.svg" alt="" className="sticker sticker-flower-right" />
-          <img src="/assets/smiley.svg" alt="" className="sticker sticker-smiley-1" />
-          <img src="/assets/smiley.svg" alt="" className="sticker sticker-smiley-4" />
           <img src="/assets/star.svg" alt="" className="sticker sticker-star-1" />
           <img src="/assets/star.svg" alt="" className="sticker sticker-star-3" />
           <img src="/assets/rainbow_bottom.svg" alt="" className="sticker sticker-bottom-rainbow" />
