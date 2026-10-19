@@ -1302,18 +1302,22 @@ html, body {
   cursor: pointer;
   background: #111111;
   opacity: 0.65;
-  transition: all 150ms ease;
+  transition: transform 150ms ease, opacity 150ms ease, border-color 150ms ease;
+  content-visibility: auto;
+  contain-intrinsic-size: 34px 34px;
+  transform: translateZ(0);
+  will-change: transform, opacity;
 }
 
 .media-subthumb-btn:hover {
   opacity: 1;
-  transform: scale(1.08);
+  transform: scale(1.08) translateZ(0);
 }
 
 .media-subthumb-btn.active {
   opacity: 1;
   border: 2px solid #ffc7e9;
-  transform: scale(1.12);
+  transform: scale(1.12) translateZ(0);
   box-shadow: 0 0 8px rgba(255, 199, 233, 0.9);
 }
 

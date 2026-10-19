@@ -253,55 +253,65 @@ export default function ReverseEngineeredApp() {
   const currentMedia = mediaList[activeMediaIndex] || mediaList[0];
   const isVideo = isVideoUrl(currentMedia);
 
-  // Aggressively preload all videos (WebM + MP4 fallback) so playback and switching are instant
+  // Smart, non-blocking preloader: preloads adjacent media in background when browser is idle
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const videoUrls: string[] = [];
-    photoMemories.forEach((mem) => {
-      const list = mem.media && mem.media.length > 0 ? mem.media : [mem.photo];
-      list.forEach((m) => {
-        if (isVideoUrl(m)) {
-          videoUrls.push(m);
+    const preloadAdjacent = () => {
+      // 1. Next item in current slide
+      const nextIdx = (activeMediaIndex + 1) % mediaList.length;
+      const nextMedia = mediaList[nextIdx];
+      if (nextMedia) {
+        if (isVideoUrl(nextMedia)) {
+          // Pre-fetch next video quietly without allocating heavy decoder buffer
+          try {
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.as = 'video';
+            link.href = nextMedia;
+            document.head.appendChild(link);
+          } catch (e) {
+            // ignore
+          }
+        } else {
+          const img = new Image();
+          img.decoding = 'async';
+          img.src = nextMedia;
         }
-      });
-    });
-
-    videoUrls.forEach((vidUrl) => {
-      // 1. Link preload tag in document.head
-      try {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'video';
-        link.href = vidUrl;
-        link.type = vidUrl.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4';
-        document.head.appendChild(link);
-      } catch (e) {
-        // ignore
       }
 
-      // 2. Offscreen video buffer preload
-      try {
-        const v = document.createElement('video');
-        v.preload = 'auto';
-        v.muted = true;
-        v.playsInline = true;
-        v.src = vidUrl;
-        v.load();
-      } catch (e) {
-        // ignore
+      // 2. Next slide's cover photo
+      const nextMem = photoMemories[(currentMemoryIndex + 1) % photoMemories.length];
+      if (nextMem && nextMem.photo) {
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = nextMem.photo;
       }
-    });
-  }, []);
+    };
 
-  // Auto-scroll active subthumbnail into view smoothly
+    if ('requestIdleCallback' in window) {
+      const handle = (window as any).requestIdleCallback(preloadAdjacent, { timeout: 2000 });
+      return () => {
+        if ('cancelIdleCallback' in window) {
+          (window as any).cancelIdleCallback(handle);
+        }
+      };
+    } else {
+      const timer = setTimeout(preloadAdjacent, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [currentMemoryIndex, activeMediaIndex, mediaList]);
+
+  // Auto-scroll active subthumbnail into view smoothly without layout thrashing
   useEffect(() => {
-    if (typeof document !== 'undefined') {
+    if (typeof document === 'undefined') return;
+    const raf = requestAnimationFrame(() => {
       const activeBtn = document.querySelector('.media-subthumb-btn.active');
       if (activeBtn) {
         activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
-    }
+    });
+    return () => cancelAnimationFrame(raf);
   }, [activeMediaIndex]);
 
   // Load persisted letters from localStorage on mount (clean slate initially)
@@ -655,6 +665,8 @@ export default function ReverseEngineeredApp() {
                       src={currentMedia}
                       alt={`${currentMemory.title} - ${activeMediaIndex + 1}`}
                       className="memory-photo-img"
+                      loading="eager"
+                      decoding="async"
                     />
                   )}
 
@@ -711,7 +723,13 @@ export default function ReverseEngineeredApp() {
                                   <span>▶️</span>
                                 </div>
                               ) : (
-                                <img src={mUrl} alt="" className="subthumb-img" />
+                                <img
+                                  src={mUrl}
+                                  alt=""
+                                  className="subthumb-img"
+                                  loading="lazy"
+                                  decoding="async"
+                                />
                               )}
                             </button>
                           );
@@ -767,7 +785,13 @@ export default function ReverseEngineeredApp() {
                       title={m.title}
                       aria-label={`Buka foto: ${m.title}`}
                     >
-                      <img src={m.photo} alt={m.title} className="memory-thumb-img" />
+                      <img
+                        src={m.photo}
+                        alt={m.title}
+                        className="memory-thumb-img"
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </button>
                   ))}
                 </div>
