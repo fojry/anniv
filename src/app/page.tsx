@@ -226,10 +226,14 @@ export default function ReverseEngineeredApp() {
   const [heroAnimKey, setHeroAnimKey] = useState(0);
   const [currentMemoryIndex, setCurrentMemoryIndex] = useState(0);
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
+  const [isSlideshowPlaying, setIsSlideshowPlaying] = useState(true);
 
   const handleSelectMemory = (idx: number) => {
     setCurrentMemoryIndex(idx);
     setActiveMediaIndex(0);
+    if (idx === photoMemories.length - 1) {
+      setIsSlideshowPlaying(true);
+    }
   };
 
   const handleGoHome = () => {
@@ -253,32 +257,69 @@ export default function ReverseEngineeredApp() {
   const currentMedia = mediaList[activeMediaIndex] || mediaList[0];
   const isVideo = isVideoUrl(currentMedia);
 
+  // Automated Slideshow for the last slide (Kompilasi Foto & Video)
+  useEffect(() => {
+    if (view !== 'memories' || !isLastSlide || !isSlideshowPlaying) return;
+    if (isVideo) return; // For videos, onEnded callback advances the slide
+
+    const timer = setInterval(() => {
+      setActiveMediaIndex((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0));
+    }, 3500);
+
+    return () => clearInterval(timer);
+  }, [view, isLastSlide, isSlideshowPlaying, isVideo, mediaList.length]);
+
+  // Keyboard navigation for memories and slideshow (Left/Right arrows, Space to toggle slideshow)
+  useEffect(() => {
+    if (view !== 'memories') return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setActiveMediaIndex((prev) => (prev > 0 ? prev - 1 : mediaList.length - 1));
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setActiveMediaIndex((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0));
+      } else if (e.key === ' ' && isLastSlide) {
+        e.preventDefault();
+        setIsSlideshowPlaying((prev) => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [view, isLastSlide, mediaList.length]);
+
   // Smart, non-blocking preloader: preloads adjacent media in background when browser is idle
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const preloadAdjacent = () => {
-      // 1. Next item in current slide
-      const nextIdx = (activeMediaIndex + 1) % mediaList.length;
-      const nextMedia = mediaList[nextIdx];
-      if (nextMedia) {
-        if (isVideoUrl(nextMedia)) {
-          // Pre-fetch next video quietly without allocating heavy decoder buffer
-          try {
-            const link = document.createElement('link');
-            link.rel = 'prefetch';
-            link.as = 'video';
-            link.href = nextMedia;
-            document.head.appendChild(link);
-          } catch (e) {
-            // ignore
+      // 1. Next 2 items in current slide for silky-smooth transitions
+      const nextIdx1 = (activeMediaIndex + 1) % mediaList.length;
+      const nextIdx2 = (activeMediaIndex + 2) % mediaList.length;
+      [nextIdx1, nextIdx2].forEach((idx) => {
+        const nextMedia = mediaList[idx];
+        if (nextMedia) {
+          if (isVideoUrl(nextMedia)) {
+            try {
+              const link = document.createElement('link');
+              link.rel = 'prefetch';
+              link.as = 'video';
+              link.href = nextMedia;
+              document.head.appendChild(link);
+            } catch (e) {
+              // ignore
+            }
+          } else {
+            const img = new Image();
+            img.decoding = 'async';
+            img.src = nextMedia;
           }
-        } else {
-          const img = new Image();
-          img.decoding = 'async';
-          img.src = nextMedia;
         }
-      }
+      });
 
       // 2. Next slide's cover photo
       const nextMem = photoMemories[(currentMemoryIndex + 1) % photoMemories.length];
@@ -297,7 +338,7 @@ export default function ReverseEngineeredApp() {
         }
       };
     } else {
-      const timer = setTimeout(preloadAdjacent, 600);
+      const timer = setTimeout(preloadAdjacent, 400);
       return () => clearTimeout(timer);
     }
   }, [currentMemoryIndex, activeMediaIndex, mediaList]);
@@ -613,12 +654,17 @@ export default function ReverseEngineeredApp() {
                       key={currentMedia}
                       controls
                       autoPlay
-                      loop
+                      loop={!isLastSlide}
                       muted
                       playsInline
                       preload="auto"
-                      className="memory-photo-img"
+                      className={`memory-photo-img ${isLastSlide ? 'slideshow-img' : ''}`}
                       style={{ objectFit: 'contain', backgroundColor: '#000' }}
+                      onEnded={() => {
+                        if (isLastSlide && isSlideshowPlaying) {
+                          setActiveMediaIndex((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0));
+                        }
+                      }}
                     >
                       <source
                         src={currentMedia}
@@ -637,7 +683,7 @@ export default function ReverseEngineeredApp() {
                       key={currentMedia}
                       src={currentMedia}
                       alt={`${currentMemory.title} - ${activeMediaIndex + 1}`}
-                      className="memory-photo-img"
+                      className={`memory-photo-img ${isLastSlide ? 'slideshow-img' : ''}`}
                       loading="eager"
                       decoding="async"
                     />
@@ -645,10 +691,18 @@ export default function ReverseEngineeredApp() {
 
                   <div className="memory-photo-tag">{currentMemory.tag}</div>
 
+                  {/* Progress bar on last slide when playing photo */}
+                  {isLastSlide && isSlideshowPlaying && !isVideo && (
+                    <div className="slideshow-progress-track">
+                      <div key={activeMediaIndex} className="slideshow-progress-fill" />
+                    </div>
+                  )}
+
                   {mediaList.length > 1 && (
                     <>
                       {/* Media Counter Pill */}
                       <div className="media-counter-pill">
+                        {isLastSlide && isSlideshowPlaying && <span className="slideshow-live-dot" />}
                         {isVideo ? '📹 Video' : '📸 Foto'} {activeMediaIndex + 1} / {mediaList.length}
                       </div>
 
@@ -678,39 +732,98 @@ export default function ReverseEngineeredApp() {
                         ›
                       </button>
 
-                      {/* Sub-thumbnails strip */}
-                      <div className="media-subthumbs-strip">
-                        {mediaList.map((mUrl, mIdx) => {
-                          const isItemVideo = isVideoUrl(mUrl);
-                          return (
-                            <button
-                              key={mUrl}
-                              type="button"
-                              className={`media-subthumb-btn ${activeMediaIndex === mIdx ? 'active' : ''}`}
-                              onClick={() => setActiveMediaIndex(mIdx)}
-                              title={isItemVideo ? `Tonton Video ${mIdx + 1}` : `Lihat Foto ${mIdx + 1}`}
-                              aria-label={isItemVideo ? `Tonton Video ${mIdx + 1}` : `Lihat Foto ${mIdx + 1}`}
-                            >
-                              {isItemVideo ? (
-                                <div className="subthumb-video-placeholder">
-                                  <span>▶️</span>
-                                </div>
-                              ) : (
-                                <img
-                                  src={mUrl}
-                                  alt=""
-                                  className="subthumb-img"
-                                  loading="lazy"
-                                  decoding="async"
-                                />
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
+                      {/* Sub-thumbnails strip (Only for slides 1 to 5; slide 6 is a clean slideshow) */}
+                      {!isLastSlide && (
+                        <div className="media-subthumbs-strip">
+                          {mediaList.map((mUrl, mIdx) => {
+                            const isItemVideo = isVideoUrl(mUrl);
+                            return (
+                              <button
+                                key={mUrl}
+                                type="button"
+                                className={`media-subthumb-btn ${activeMediaIndex === mIdx ? 'active' : ''}`}
+                                onClick={() => setActiveMediaIndex(mIdx)}
+                                title={isItemVideo ? `Tonton Video ${mIdx + 1}` : `Lihat Foto ${mIdx + 1}`}
+                                aria-label={isItemVideo ? `Tonton Video ${mIdx + 1}` : `Lihat Foto ${mIdx + 1}`}
+                              >
+                                {isItemVideo ? (
+                                  <div className="subthumb-video-placeholder">
+                                    <span>▶️</span>
+                                  </div>
+                                ) : (
+                                  <img
+                                    src={mUrl}
+                                    alt=""
+                                    className="subthumb-img"
+                                    loading="lazy"
+                                    decoding="async"
+                                  />
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
                     </>
                   )}
                 </div>
+
+                {isLastSlide && (
+                  <div className="slideshow-panel">
+                    <div className="slideshow-actions-row">
+                      <button
+                        type="button"
+                        className="slideshow-btn slideshow-nav-btn"
+                        onClick={() =>
+                          setActiveMediaIndex((prev) => (prev > 0 ? prev - 1 : mediaList.length - 1))
+                        }
+                        title="Foto sebelumnya (atau tekan panah kiri)"
+                      >
+                        ⏮️ Sebelumnya
+                      </button>
+
+                      <button
+                        type="button"
+                        className={`slideshow-btn slideshow-play-toggle ${isSlideshowPlaying ? 'playing' : 'paused'}`}
+                        onClick={() => setIsSlideshowPlaying((prev) => !prev)}
+                        title={isSlideshowPlaying ? 'Jeda otomatis (Spasi)' : 'Mulai otomatis (Spasi)'}
+                      >
+                        {isSlideshowPlaying ? (
+                          <>
+                            <span>⏸️</span>
+                            <span>Jeda Slideshow</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>▶️</span>
+                            <span>Mulai Slideshow</span>
+                          </>
+                        )}
+                      </button>
+
+                      <button
+                        type="button"
+                        className="slideshow-btn slideshow-nav-btn"
+                        onClick={() =>
+                          setActiveMediaIndex((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0))
+                        }
+                        title="Foto berikutnya (atau tekan panah kanan)"
+                      >
+                        Selanjutnya ⏭️
+                      </button>
+                    </div>
+
+                    <div className="slideshow-status-bar">
+                      <span>
+                        {isVideo
+                          ? '🎬 Memutar video... (akan otomatis lanjut setelah video selesai)'
+                          : isSlideshowPlaying
+                          ? '✨ Slideshow otomatis berjalan tiap 3.5 detik · Tekan Jeda atau tombol Spasi untuk berhenti sejenak'
+                          : '⏸️ Slideshow sedang dijeda · Tekan Mulai Slideshow atau Spasi untuk lanjut'}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
                 {!isLastSlide && currentMemory.story && (
                   <div className="memory-story-col">
