@@ -227,8 +227,11 @@ export default function ReverseEngineeredApp() {
   const [currentMemoryIndex, setCurrentMemoryIndex] = useState(0);
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
   const [isSlideshowPlaying, setIsSlideshowPlaying] = useState(true);
+  const [slideDirection, setSlideDirection] = useState<'next' | 'prev'>('next');
 
   const handleSelectMemory = (idx: number) => {
+    if (idx === currentMemoryIndex) return;
+    setSlideDirection(idx > currentMemoryIndex ? 'next' : 'prev');
     setCurrentMemoryIndex(idx);
     setActiveMediaIndex(0);
     if (idx === photoMemories.length - 1) {
@@ -637,7 +640,10 @@ export default function ReverseEngineeredApp() {
               {/* Header Meta Row (Date removed as requested) */}
               <div className="memory-header-row">
                 <div className="memory-meta-left">
-                  <span className="memory-counter-pill">
+                  <span
+                    key={currentMemoryIndex}
+                    className="memory-counter-pill memory-counter-pop"
+                  >
                     📸 Kenangan {currentMemoryIndex + 1} dari {photoMemories.length}
                   </span>
                 </div>
@@ -646,208 +652,216 @@ export default function ReverseEngineeredApp() {
                 </div>
               </div>
 
-              {/* Photo & Story Grid (Centered for last slide) */}
-              <div className={`memory-content-grid ${isLastSlide ? 'memory-content-centered' : ''}`}>
-                <div className={`memory-photo-frame ${isLastSlide ? 'memory-photo-frame-centered' : ''}`}>
-                  {isVideo ? (
-                    <video
-                      key={currentMedia}
-                      controls
-                      autoPlay
-                      loop={!isLastSlide}
-                      muted
-                      playsInline
-                      preload="auto"
-                      className={`memory-photo-img ${isLastSlide ? 'slideshow-img' : ''}`}
-                      style={{ objectFit: 'contain', backgroundColor: '#000' }}
-                      onEnded={() => {
-                        if (isLastSlide && isSlideshowPlaying) {
-                          setActiveMediaIndex((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0));
-                        }
-                      }}
-                    >
-                      <source
-                        src={currentMedia}
-                        type={currentMedia.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'}
-                      />
-                      {currentMedia.toLowerCase().endsWith('.webm') && (
-                        <source
-                          src={currentMedia.replace(/\.webm$/i, '.mp4')}
-                          type="video/mp4"
+              {/* Slide Viewport with Smooth Direction-Aware Transition */}
+              <div className="memory-slide-viewport">
+                <div
+                  key={currentMemoryIndex}
+                  className={`memory-slide-track slide-anim-${slideDirection}`}
+                >
+                  {/* Photo & Story Grid (Centered for last slide) */}
+                  <div className={`memory-content-grid ${isLastSlide ? 'memory-content-centered' : ''}`}>
+                    <div className={`memory-photo-frame ${isLastSlide ? 'memory-photo-frame-centered' : ''}`}>
+                      {isVideo ? (
+                        <video
+                          key={currentMedia}
+                          controls
+                          autoPlay
+                          loop={!isLastSlide}
+                          muted
+                          playsInline
+                          preload="auto"
+                          className={`memory-photo-img ${isLastSlide ? 'slideshow-img' : ''}`}
+                          style={{ objectFit: 'contain', backgroundColor: '#000' }}
+                          onEnded={() => {
+                            if (isLastSlide && isSlideshowPlaying) {
+                              setActiveMediaIndex((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0));
+                            }
+                          }}
+                        >
+                          <source
+                            src={currentMedia}
+                            type={currentMedia.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'}
+                          />
+                          {currentMedia.toLowerCase().endsWith('.webm') && (
+                            <source
+                              src={currentMedia.replace(/\.webm$/i, '.mp4')}
+                              type="video/mp4"
+                            />
+                          )}
+                          Browser Anda tidak mendukung pemutar video HTML5.
+                        </video>
+                      ) : (
+                        <img
+                          key={currentMedia}
+                          src={currentMedia}
+                          alt={`${currentMemory.title} - ${activeMediaIndex + 1}`}
+                          className={`memory-photo-img ${isLastSlide ? 'slideshow-img' : ''}`}
+                          loading="eager"
+                          decoding="async"
                         />
                       )}
-                      Browser Anda tidak mendukung pemutar video HTML5.
-                    </video>
-                  ) : (
-                    <img
-                      key={currentMedia}
-                      src={currentMedia}
-                      alt={`${currentMemory.title} - ${activeMediaIndex + 1}`}
-                      className={`memory-photo-img ${isLastSlide ? 'slideshow-img' : ''}`}
-                      loading="eager"
-                      decoding="async"
-                    />
-                  )}
 
-                  <div className="memory-photo-tag">{currentMemory.tag}</div>
+                      <div className="memory-photo-tag">{currentMemory.tag}</div>
 
-                  {/* Progress bar on last slide when playing photo */}
-                  {isLastSlide && isSlideshowPlaying && !isVideo && (
-                    <div className="slideshow-progress-track">
-                      <div key={activeMediaIndex} className="slideshow-progress-fill" />
-                    </div>
-                  )}
-
-                  {mediaList.length > 1 && (
-                    <>
-                      {/* Media Counter Pill */}
-                      <div className="media-counter-pill">
-                        {isLastSlide && isSlideshowPlaying && <span className="slideshow-live-dot" />}
-                        {isVideo ? '📹 Video' : '📸 Foto'} {activeMediaIndex + 1} / {mediaList.length}
-                      </div>
-
-                      {/* Previous Media Arrow */}
-                      <button
-                        type="button"
-                        className="media-nav-arrow media-nav-prev"
-                        onClick={() =>
-                          setActiveMediaIndex((prev) => (prev > 0 ? prev - 1 : mediaList.length - 1))
-                        }
-                        aria-label="Media sebelumnya"
-                        title="Media sebelumnya"
-                      >
-                        ‹
-                      </button>
-
-                      {/* Next Media Arrow */}
-                      <button
-                        type="button"
-                        className="media-nav-arrow media-nav-next"
-                        onClick={() =>
-                          setActiveMediaIndex((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0))
-                        }
-                        aria-label="Media berikutnya"
-                        title="Media berikutnya"
-                      >
-                        ›
-                      </button>
-
-                      {/* Sub-thumbnails strip (Only for slides 1 to 5; slide 6 is a clean slideshow) */}
-                      {!isLastSlide && (
-                        <div className="media-subthumbs-strip">
-                          {mediaList.map((mUrl, mIdx) => {
-                            const isItemVideo = isVideoUrl(mUrl);
-                            return (
-                              <button
-                                key={mUrl}
-                                type="button"
-                                className={`media-subthumb-btn ${activeMediaIndex === mIdx ? 'active' : ''}`}
-                                onClick={() => setActiveMediaIndex(mIdx)}
-                                title={isItemVideo ? `Tonton Video ${mIdx + 1}` : `Lihat Foto ${mIdx + 1}`}
-                                aria-label={isItemVideo ? `Tonton Video ${mIdx + 1}` : `Lihat Foto ${mIdx + 1}`}
-                              >
-                                {isItemVideo ? (
-                                  <div className="subthumb-video-placeholder">
-                                    <span>▶️</span>
-                                  </div>
-                                ) : (
-                                  <img
-                                    src={mUrl}
-                                    alt=""
-                                    className="subthumb-img"
-                                    loading="lazy"
-                                    decoding="async"
-                                  />
-                                )}
-                              </button>
-                            );
-                          })}
+                      {/* Progress bar on last slide when playing photo */}
+                      {isLastSlide && isSlideshowPlaying && !isVideo && (
+                        <div className="slideshow-progress-track">
+                          <div key={activeMediaIndex} className="slideshow-progress-fill" />
                         </div>
                       )}
-                    </>
-                  )}
-                </div>
 
-                {isLastSlide && (
-                  <div className="slideshow-panel">
-                    <div className="slideshow-actions-row">
-                      <button
-                        type="button"
-                        className="slideshow-btn slideshow-nav-btn"
-                        onClick={() =>
-                          setActiveMediaIndex((prev) => (prev > 0 ? prev - 1 : mediaList.length - 1))
-                        }
-                        title="Foto sebelumnya (atau tekan panah kiri)"
-                      >
-                        ⏮️ Sebelumnya
-                      </button>
+                      {mediaList.length > 1 && (
+                        <>
+                          {/* Media Counter Pill */}
+                          <div className="media-counter-pill">
+                            {isLastSlide && isSlideshowPlaying && <span className="slideshow-live-dot" />}
+                            {isVideo ? '📹 Video' : '📸 Foto'} {activeMediaIndex + 1} / {mediaList.length}
+                          </div>
 
-                      <button
-                        type="button"
-                        className={`slideshow-btn slideshow-play-toggle ${isSlideshowPlaying ? 'playing' : 'paused'}`}
-                        onClick={() => setIsSlideshowPlaying((prev) => !prev)}
-                        title={isSlideshowPlaying ? 'Jeda otomatis (Spasi)' : 'Mulai otomatis (Spasi)'}
-                      >
-                        {isSlideshowPlaying ? (
-                          <>
-                            <span>⏸️</span>
-                            <span>Jeda Slideshow</span>
-                          </>
-                        ) : (
-                          <>
-                            <span>▶️</span>
-                            <span>Mulai Slideshow</span>
-                          </>
-                        )}
-                      </button>
+                          {/* Previous Media Arrow */}
+                          <button
+                            type="button"
+                            className="media-nav-arrow media-nav-prev"
+                            onClick={() =>
+                              setActiveMediaIndex((prev) => (prev > 0 ? prev - 1 : mediaList.length - 1))
+                            }
+                            aria-label="Media sebelumnya"
+                            title="Media sebelumnya"
+                          >
+                            ‹
+                          </button>
 
-                      <button
-                        type="button"
-                        className="slideshow-btn slideshow-nav-btn"
-                        onClick={() =>
-                          setActiveMediaIndex((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0))
-                        }
-                        title="Foto berikutnya (atau tekan panah kanan)"
-                      >
-                        Selanjutnya ⏭️
-                      </button>
+                          {/* Next Media Arrow */}
+                          <button
+                            type="button"
+                            className="media-nav-arrow media-nav-next"
+                            onClick={() =>
+                              setActiveMediaIndex((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0))
+                            }
+                            aria-label="Media berikutnya"
+                            title="Media berikutnya"
+                          >
+                            ›
+                          </button>
+
+                          {/* Sub-thumbnails strip (Only for slides 1 to 5; slide 6 is a clean slideshow) */}
+                          {!isLastSlide && (
+                            <div className="media-subthumbs-strip">
+                              {mediaList.map((mUrl, mIdx) => {
+                                const isItemVideo = isVideoUrl(mUrl);
+                                return (
+                                  <button
+                                    key={mUrl}
+                                    type="button"
+                                    className={`media-subthumb-btn ${activeMediaIndex === mIdx ? 'active' : ''}`}
+                                    onClick={() => setActiveMediaIndex(mIdx)}
+                                    title={isItemVideo ? `Tonton Video ${mIdx + 1}` : `Lihat Foto ${mIdx + 1}`}
+                                    aria-label={isItemVideo ? `Tonton Video ${mIdx + 1}` : `Lihat Foto ${mIdx + 1}`}
+                                  >
+                                    {isItemVideo ? (
+                                      <div className="subthumb-video-placeholder">
+                                        <span>▶️</span>
+                                      </div>
+                                    ) : (
+                                      <img
+                                        src={mUrl}
+                                        alt=""
+                                        className="subthumb-img"
+                                        loading="lazy"
+                                        decoding="async"
+                                      />
+                                    )}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </>
+                      )}
                     </div>
 
-                    <div className="slideshow-status-bar">
-                      <span>
-                        {isVideo
-                          ? '🎬 Memutar video... (akan otomatis lanjut setelah video selesai)'
-                          : isSlideshowPlaying
-                          ? '✨ Slideshow otomatis berjalan tiap 3.5 detik · Tekan Jeda atau tombol Spasi untuk berhenti sejenak'
-                          : '⏸️ Slideshow sedang dijeda · Tekan Mulai Slideshow atau Spasi untuk lanjut'}
-                      </span>
-                    </div>
-                  </div>
-                )}
+                    {isLastSlide && (
+                      <div className="slideshow-panel">
+                        <div className="slideshow-actions-row">
+                          <button
+                            type="button"
+                            className="slideshow-btn slideshow-nav-btn"
+                            onClick={() =>
+                              setActiveMediaIndex((prev) => (prev > 0 ? prev - 1 : mediaList.length - 1))
+                            }
+                            title="Foto sebelumnya (atau tekan panah kiri)"
+                          >
+                            ⏮️ Sebelumnya
+                          </button>
 
-                {!isLastSlide && currentMemory.story && (
-                  <div className="memory-story-col">
-                    <h2 className="memory-story-title">{currentMemory.title}</h2>
-                    <p className="memory-story-text">{currentMemory.story}</p>
-                    {currentMemory.whisper && (
-                      <div className="memory-whisper-card">
-                        "{currentMemory.whisper}"
+                          <button
+                            type="button"
+                            className={`slideshow-btn slideshow-play-toggle ${isSlideshowPlaying ? 'playing' : 'paused'}`}
+                            onClick={() => setIsSlideshowPlaying((prev) => !prev)}
+                            title={isSlideshowPlaying ? 'Jeda otomatis (Spasi)' : 'Mulai otomatis (Spasi)'}
+                          >
+                            {isSlideshowPlaying ? (
+                              <>
+                                <span>⏸️</span>
+                                <span>Jeda Slideshow</span>
+                              </>
+                            ) : (
+                              <>
+                                <span>▶️</span>
+                                <span>Mulai Slideshow</span>
+                              </>
+                            )}
+                          </button>
+
+                          <button
+                            type="button"
+                            className="slideshow-btn slideshow-nav-btn"
+                            onClick={() =>
+                              setActiveMediaIndex((prev) => (prev < mediaList.length - 1 ? prev + 1 : 0))
+                            }
+                            title="Foto berikutnya (atau tekan panah kanan)"
+                          >
+                            Selanjutnya ⏭️
+                          </button>
+                        </div>
+
+                        <div className="slideshow-status-bar">
+                          <span>
+                            {isVideo
+                              ? '🎬 Memutar video... (akan otomatis lanjut setelah video selesai)'
+                              : isSlideshowPlaying
+                              ? '✨ Slideshow otomatis berjalan tiap 3.5 detik · Tekan Jeda atau tombol Spasi untuk berhenti sejenak'
+                              : '⏸️ Slideshow sedang dijeda · Tekan Mulai Slideshow atau Spasi untuk lanjut'}
+                          </span>
+                        </div>
                       </div>
                     )}
 
-                    <div style={{ marginTop: '8px', display: 'flex', gap: '10px' }}>
-                      <button
-                        type="button"
-                        className="btn-generate-gold"
-                        style={{ width: '100%', justifyContent: 'center' }}
-                        onClick={() => setView('letter')}
-                      >
-                        <span>💌 Tulis Pesan Cinta untuk {sender === 'Radia' ? 'Rala' : 'Radia'}</span>
-                        <span>✨</span>
-                      </button>
-                    </div>
+                    {!isLastSlide && currentMemory.story && (
+                      <div className="memory-story-col">
+                        <h2 className="memory-story-title">{currentMemory.title}</h2>
+                        <p className="memory-story-text">{currentMemory.story}</p>
+                        {currentMemory.whisper && (
+                          <div className="memory-whisper-card">
+                            "{currentMemory.whisper}"
+                          </div>
+                        )}
+
+                        <div style={{ marginTop: '8px', display: 'flex', gap: '10px' }}>
+                          <button
+                            type="button"
+                            className="btn-generate-gold"
+                            style={{ width: '100%', justifyContent: 'center' }}
+                            onClick={() => setView('letter')}
+                          >
+                            <span>💌 Tulis Pesan Cinta untuk {sender === 'Radia' ? 'Rala' : 'Radia'}</span>
+                            <span>✨</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
 
               {/* Navigation Controls & Thumbnails Strip */}
